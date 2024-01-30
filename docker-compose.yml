@@ -13,7 +13,7 @@ services:
     depends_on:
       - template-db
     networks:
-      - i2i-network
+      - template-network
 
   template-db:
     container_name: template-db
