@@ -1,4 +1,4 @@
-FROM node:18.13-alpine
+FROM node:18.19.0-alpine3.19
 
 # Set my-template as work directory inside of Docker container
 WORKDIR /my-template
