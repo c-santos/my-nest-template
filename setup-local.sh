@@ -13,6 +13,7 @@ $DC run --rm my-template npm install
 $DC up -d
 
 # Run migration and seeders
+$DC exec my-template npm run typeorm:migration:generate --name=Init
 $DC exec my-template npm run typeorm:migration:run
 $DC exec my-template npm run typeorm:seed
 
