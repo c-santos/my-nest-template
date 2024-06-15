@@ -4,6 +4,7 @@ import { AppService } from '../../application/services/app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dbConfig } from '../config/typeorm.config';
 import { UserModule } from './user.module';
+import { ProductModule } from './product.module';
 
 @Module({
     imports: [
@@ -11,6 +12,7 @@ import { UserModule } from './user.module';
             useFactory: () => dbConfig,
         }),
         UserModule,
+        ProductModule,
     ],
     controllers: [AppController],
     providers: [AppService],
