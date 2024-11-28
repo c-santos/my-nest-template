@@ -4,12 +4,14 @@ export abstract class BaseModel {
     @UpdateDateColumn({
         type: 'timestamptz',
         default: () => 'CURRENT_TIMESTAMP',
+        name: 'updated_at',
     })
-    updated_at: Date;
+    updatedAt: Date;
 
     @CreateDateColumn({
         type: 'timestamptz',
         default: () => 'CURRENT_TIMESTAMP',
+        name: 'created_at',
     })
-    created_at: Date;
+    createdAt: Date;
 }

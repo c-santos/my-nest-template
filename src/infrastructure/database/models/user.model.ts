@@ -7,12 +7,12 @@ export class User extends BaseModel implements UserEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
-    first_name: string;
+    @Column({ name: 'first_name', type: 'text' })
+    firstName: string;
 
-    @Column()
-    last_name: string;
+    @Column({ name: 'last_name', type: 'text' })
+    lastName: string;
 
-    @Column()
+    @Column({ type: 'text' })
     email: string;
 }

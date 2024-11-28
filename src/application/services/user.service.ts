@@ -1,11 +1,11 @@
 import { Inject } from '@nestjs/common';
 import { BaseService } from './base.service';
-import { UserRepository } from '@/infrastructure/database/repositories/user.repository';
 import { CreateUserDto } from '@/infrastructure/http/dtos/create-user.dto';
+import { IUserRepository } from '@/domain/interfaces/IUserRepository';
 
 export class UserService extends BaseService {
     constructor(
-        @Inject(UserRepository) private userRepository: UserRepository,
+        @Inject(IUserRepository) private userRepository: IUserRepository,
     ) {
         super(UserService.name);
     }
