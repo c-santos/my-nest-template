@@ -1,8 +1,8 @@
 export class UserEntity {
     id: string;
     email: string;
-    first_name: string;
-    last_name: string;
+    firstName: string;
+    lastName: string;
 
     constructor(data: Partial<UserEntity>) {
         Object.assign(this, data);

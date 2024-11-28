@@ -9,10 +9,10 @@ export class UserSeeder extends Seeder {
             {
                 id: uuid(),
                 email: 'swag@gmail.com',
-                first_name: 'Swag',
-                last_name: 'Man',
-                created_at: new Date(),
-                updated_at: new Date(),
+                firstName: 'Swag',
+                lastName: 'Man',
+                createdAt: new Date(),
+                updatedAt: new Date(),
             },
         ];
 
