@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Entity, QueryRunner, Repository } from 'typeorm';
 import { FindOptions } from '../types/find-options.type';
 import { applyWhereConditions } from './utils/applyWhereConditions';
 import { QueryOptions } from '../types/query-options.type';
@@ -78,8 +78,26 @@ export abstract class BaseRepository<
         return data.map((biller) => this._entity.create(biller));
     }
 
-    async create(data: Partial<Entity>): Promise<Entity> {
+    async create(
+        data: Partial<Entity>,
+        queryRunner?: QueryRunner,
+    ): Promise<Entity> {
         const databaseModelData = plainToInstance(this._model, data);
+
+        if (queryRunner) {
+            const queryBuilder = this.repository.createQueryBuilder(
+                this.tableAlias,
+                queryRunner,
+            );
+            const createdEntity = queryBuilder
+                .insert()
+                .into(this._model)
+                .values(databaseModelData)
+                .returning('*')
+                .execute();
+            return this._entity.create(createdEntity);
+        }
+
         const createdEntity = await this.repository.save(databaseModelData);
         return this._entity.create(createdEntity);
     }
@@ -87,12 +105,14 @@ export abstract class BaseRepository<
     async update(
         data: Partial<Entity>,
         where?: FindOptions<Entity> | string,
+        queryRunner?: QueryRunner,
     ): Promise<boolean> {
         const databaseModelData = plainToInstance(this._model, data);
-        const queryBuilder = this.repository
-            .createQueryBuilder(this.tableAlias)
-            .update(this._model)
-            .set(databaseModelData);
+        const queryBuilder = queryRunner
+            ? this.repository.createQueryBuilder(this.tableAlias, queryRunner)
+            : this.repository.createQueryBuilder(this.tableAlias);
+
+        queryBuilder.update(this._model).set(databaseModelData);
 
         if (where) {
             applyWhereConditions<Entity, DatabaseModel>(
