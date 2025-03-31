@@ -1,14 +1,13 @@
-version: '3.9'
 services:
     my-template:
         build: .
         ports:
-            - '8000:8000'
+            - $PORT:$PORT
         volumes:
             - .:/my-template/
         environment:
-            - PORT=8000
-            - NODE_ENV=LOCAL
+            - PORT=$PORT
+            - NODE_ENV=$NODE_ENV
         command: npm run start:dev
         depends_on:
             - template-db
@@ -19,10 +18,10 @@ services:
         container_name: template-db
         image: postgres
         ports:
-            - '5432:5432'
+            - $DB_PORT:5432 # CONTAINER:HOST
         environment:
-            POSTGRES_PASSWORD: root
-            POSTGRES_DB: template-db
+            POSTGRES_PASSWORD: $DB_PASS
+            POSTGRES_DB: $DB_NAME
         networks:
             - template-network
 
